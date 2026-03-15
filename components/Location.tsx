@@ -5,8 +5,10 @@ import { boutiqueData } from "@/lib/boutique-data";
 
 export default function Location() {
   return (
-    <section id="location" className="py-20 md:py-32">
+    <section id="location" className="pt-12 md:pt-16 pb-20 md:pb-32">
       <div className="px-6 lg:px-12 max-w-7xl mx-auto">
+        {/* Hairline divider */}
+        <div className="w-full h-px bg-tc-hairline mb-16 md:mb-20" />
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

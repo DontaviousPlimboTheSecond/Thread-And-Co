@@ -6,7 +6,7 @@ import { boutiqueData } from "@/lib/boutique-data";
 
 export default function About() {
   return (
-    <section id="about" className="py-20 md:py-32">
+    <section id="about" className="pt-20 md:pt-32 pb-12 md:pb-16">
       <div className="px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* Left: Text */}
