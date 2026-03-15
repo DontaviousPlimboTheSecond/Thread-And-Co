@@ -100,7 +100,7 @@ export default function PersonalStyling() {
           >
             {/* TODO: REPLACE — use real styling session photo */}
             <Image
-              src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&h=1100&fit=crop&q=80"
+              src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=800&h=1100&fit=crop&q=80"
               alt="Personal styling session at Thread & Co."
               fill
               className="object-cover"

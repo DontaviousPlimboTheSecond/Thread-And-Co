@@ -30,31 +30,31 @@ export const collections: Collection[] = [
     id: "occasion-wear",
     name: "Occasion Wear",
     descriptor: "Dressed for the moment.",
-    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800&h=1000&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1518622358385-8ea7d0794bf6?w=800&h=1000&fit=crop&q=80",
   },
   {
     id: "everyday-essentials",
     name: "Everyday Essentials",
     descriptor: "The pieces you reach for first.",
-    image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&h=1000&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=800&h=1000&fit=crop&q=80",
   },
   {
     id: "outerwear",
     name: "Outerwear",
     descriptor: "For Nottingham weather and beyond.",
-    image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&h=1000&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=800&h=1000&fit=crop&q=80",
   },
   {
     id: "accessories",
     name: "Accessories",
     descriptor: "The details that finish it.",
-    image: "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=800&h=600&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=800&h=1000&fit=crop&q=80",
   },
   {
     id: "new-in",
     name: "New In",
     descriptor: "This week's edit.",
-    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&h=500&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=800&fit=crop&q=80",
   },
 ];
 

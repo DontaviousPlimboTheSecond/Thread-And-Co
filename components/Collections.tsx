@@ -89,8 +89,8 @@ export default function Collections() {
           </div>
         </div>
 
-        {/* Row 2: 2 stacked left + large right (reversed) */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-6">
+        {/* Row 2: Accessories left + New In right — equal row height */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-6 md:grid-rows-[360px]">
           {/* Left: Accessories */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -99,7 +99,7 @@ export default function Collections() {
             transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
             className="md:col-span-2 relative group cursor-pointer overflow-hidden"
           >
-            <div className="relative aspect-[4/3]">
+            <div className="relative aspect-[4/3] md:aspect-auto md:h-full">
               <Image
                 src={collections[3].image}
                 alt={collections[3].name}
@@ -127,7 +127,7 @@ export default function Collections() {
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="md:col-span-3 relative group cursor-pointer overflow-hidden"
           >
-            <div className="relative aspect-[16/9] md:aspect-[4/3]">
+            <div className="relative aspect-[16/9] md:aspect-auto md:h-full">
               <Image
                 src={collections[4].image}
                 alt={collections[4].name}
