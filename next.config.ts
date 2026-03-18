@@ -9,6 +9,46 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          // Prevent clickjacking
+          { key: "X-Frame-Options", value: "DENY" },
+          // Prevent MIME-type sniffing
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          // Control referrer information
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          // Enforce HTTPS
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          // Restrict browser features
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), payment=()",
+          },
+          // Content Security Policy
+          {
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "font-src 'self' https://fonts.gstatic.com",
+              "img-src 'self' data: https://images.unsplash.com",
+              "frame-src https://www.google.com",
+              "connect-src 'self'",
+              "base-uri 'self'",
+              "form-action 'self'",
+            ].join("; "),
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

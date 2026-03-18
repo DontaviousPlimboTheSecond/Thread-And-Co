@@ -18,13 +18,36 @@ import {
 } from "@/components/ui/select";
 
 const stylingSchema = z.object({
-  name: z.string().min(2, "Please enter your name"),
-  email: z.string().email("Please enter a valid email"),
-  phone: z.string().min(6, "Please enter your phone number"),
-  reason: z.string().min(1, "Please select a reason"),
-  date: z.string().min(1, "Please select a date"),
-  time: z.string().min(1, "Please select a time"),
-  notes: z.string().optional(),
+  name: z
+    .string()
+    .min(2, "Please enter your name")
+    .max(100, "Name must be under 100 characters")
+    .regex(/^[a-zA-Z\s\-'.]+$/, "Name contains invalid characters"),
+  email: z
+    .string()
+    .email("Please enter a valid email")
+    .max(254, "Email must be under 254 characters"),
+  phone: z
+    .string()
+    .min(6, "Please enter your phone number")
+    .max(20, "Phone number is too long")
+    .regex(/^[+]?[\d\s\-()]{6,20}$/, "Please enter a valid phone number"),
+  reason: z.enum(
+    ["special-occasion", "wardrobe-refresh", "gift", "just-browsing", "other"],
+    { error: "Please select a reason" }
+  ),
+  date: z
+    .string()
+    .min(1, "Please select a date")
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Please select a valid date"),
+  time: z.enum(
+    ["09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00"],
+    { error: "Please select a time" }
+  ),
+  notes: z
+    .string()
+    .max(1000, "Notes must be under 1000 characters")
+    .optional(),
 });
 
 type StylingFormData = z.infer<typeof stylingSchema>;
@@ -51,6 +74,7 @@ const timeSlots = [
 export default function PersonalStyling() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const {
     register,
@@ -63,21 +87,28 @@ export default function PersonalStyling() {
 
   const onSubmit = async (data: StylingFormData) => {
     setSubmitting(true);
+    setFormError(null);
     try {
-      const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) => {
-        if (value) formData.append(key, value);
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
 
-      await fetch("https://formspree.io/f/maqpbebg", {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
-      });
+      if (res.status === 429) {
+        setFormError("Too many requests. Please try again in a few minutes.");
+        return;
+      }
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        setFormError(body?.error || "Something went wrong. Please try again.");
+        return;
+      }
 
       setSubmitted(true);
     } catch {
-      setSubmitted(true);
+      setFormError("Network error. Please check your connection and try again.");
     } finally {
       setSubmitting(false);
     }
@@ -234,7 +265,7 @@ export default function PersonalStyling() {
                     What are you shopping for?
                   </Label>
                   <Select
-                    onValueChange={(value) => { if (value) setValue("reason", value as string); }}
+                    onValueChange={(value) => { if (value) setValue("reason", value as "special-occasion" | "wardrobe-refresh" | "gift" | "just-browsing" | "other"); }}
                   >
                     <SelectTrigger className="mt-1 bg-transparent border-tc-hairline font-[family-name:var(--font-dm-sans)] font-light text-sm">
                       <SelectValue placeholder="Select a reason" />
@@ -289,7 +320,7 @@ export default function PersonalStyling() {
                       Preferred Time
                     </Label>
                     <Select
-                      onValueChange={(value) => { if (value) setValue("time", value as string); }}
+                      onValueChange={(value) => { if (value) setValue("time", value as StylingFormData["time"]); }}
                     >
                       <SelectTrigger className="mt-1 bg-transparent border-tc-hairline font-[family-name:var(--font-dm-sans)] font-light text-sm">
                         <SelectValue placeholder="Select a time" />
@@ -325,6 +356,12 @@ export default function PersonalStyling() {
                     placeholder="Tell us anything that might help us prepare..."
                   />
                 </div>
+
+                {formError && (
+                  <p className="text-xs text-red-600 bg-red-50 border border-red-200 px-4 py-2">
+                    {formError}
+                  </p>
+                )}
 
                 <button
                   type="submit"

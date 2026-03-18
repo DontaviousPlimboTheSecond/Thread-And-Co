@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant, DM_Sans } from "next/font/google";
-import { generateJsonLd } from "@/lib/schema";
+import { generateJsonLd, safeJsonLdStringify } from "@/lib/schema";
 import "./globals.css";
 
 // Sales tracking dashboard available on Solanum Pro plan (£299/mo)
@@ -57,7 +57,7 @@ export default function RootLayout({
         {children}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
         />
         {/* Google Analytics — uncomment and replace GA_MEASUREMENT_ID to activate
         <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" />
